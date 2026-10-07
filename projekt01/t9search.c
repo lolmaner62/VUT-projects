@@ -9,6 +9,7 @@ bool checkForContact(char name[], char phone[], char filter[]);
 void cloneArray(char array1[], char array2[]);
 bool contains(char text[], char search[]);
 bool isStringRightSize(char text[]);
+bool isFilterValid(char filter[]);
 int main(int argc, char *argv[])
 {
     char name[MAX_ARRAY_SIZE];
@@ -28,13 +29,9 @@ int main(int argc, char *argv[])
     else if (argc == 2)
     {
         bool isFound = false;
-        for (int i = 0; argv[1][i] != '\0'; i++)
+        if(!isFilterValid(argv[1]))
         {
-            if(argv[1][i] < '0' || argv[1][i] > '9')
-            {
-                fprintf(stderr, "picovina more, na vstupu je %c", argv[1][i]);
-                return 1;
-            }
+            return 1;
         }
         while (fgets(name, sizeof(name), stdin) != NULL)
         {
@@ -233,4 +230,22 @@ bool isStringRightSize(char text[])
         }
     }
     return false;
+}
+bool isFilterValid(char filter[])
+{
+    if(filter[0] == '\0')
+    {
+        fprintf(stderr, "picovina more, na vstupu je %c", filter[0]);
+        return false;
+    }
+    int i;
+    for (i = 0; filter[i] != '\0'; i++)
+    {
+        if(filter[i] < '0' || filter[i] > '9')
+        {
+            fprintf(stderr, "picovina more, na vstupu je %c", filter[i]);
+            return false;
+        }
+    }
+    return i <= 100;
 }
