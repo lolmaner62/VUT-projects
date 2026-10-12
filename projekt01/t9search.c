@@ -17,11 +17,27 @@ int main(int argc, char *argv[])
     
     if(argc == 1)
     {
-        while (fgets(name, sizeof(name), stdin) != NULL && fgets(phone, sizeof(phone), stdin) != NULL)
+        while (fgets(name, sizeof(name), stdin) != NULL)
         {
+            if(fgets(phone, sizeof(phone), stdin) == NULL)
+            {
+                fprintf(stderr, "Chyba pico");
+                return 1;
+            }
+            if(name[0] == '\0'|| phone[0] == '\0' )
+            {
+                fprintf(stderr, "Chyba pico");
+                return 1;
+            }
+            if(!isStringRightSize(name) || !isStringRightSize(phone))
+            {
+                fprintf(stderr, "Chyba pico");
+                return 1;
+            }
             removeNewLine(name);
             removeNewLine(phone);
             printContact(name, phone);
+
         }
         
 
